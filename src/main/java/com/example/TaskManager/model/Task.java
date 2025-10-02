@@ -13,16 +13,16 @@ public class Task {
 
     private String title;
     private String description;
-    private String importance;
+    private String priority;
     private boolean completed;
 
     public Task() {
     }
 
-    public Task(String title, String description, String importance, boolean completed) {
+    public Task(String title, String description, String priority, boolean completed) {
         this.title = title;
         this.description = description;
-        this.importance = importance;
+        this.priority = priority;
         this.completed = completed;
     }
 
@@ -50,12 +50,12 @@ public class Task {
         this.description = description;
     }
 
-    public String getImportance() {
-        return importance;
+    public String getPriority() {
+        return priority;
     }
 
-    public void setImportance(String importance) {
-        this.importance = importance;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public boolean isCompleted() {

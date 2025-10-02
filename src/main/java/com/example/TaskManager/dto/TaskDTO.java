@@ -1,17 +1,19 @@
 package com.example.TaskManager.dto;
 
-public class TaskDTO {
-    private Long id;
-    private String title;
-    private String description;
-    private String importance;
-    private boolean completed;
+//import lombok.Value; con este import vuelve la clase inmutable con getter y constructor sin ecribir
 
-    public TaskDTO(Long id, String title, String description, String importance, boolean completed) {
+public class TaskDTO {
+    private final Long id;
+    private final String title;
+    private final String description;
+    private final String priority;
+    private final boolean completed;
+
+    public TaskDTO(Long id, String title, String description, String priority, boolean completed) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.importance = importance;
+        this.priority = priority;
         this.completed = completed;
     }
     public Long getId() {
@@ -23,8 +25,8 @@ public class TaskDTO {
     public String getDescription() {
         return description;
     }
-    public String getImportance() {
-        return importance;
+    public String getPriority() {
+        return priority;
     }
     public boolean isCompleted() {
         return completed;
