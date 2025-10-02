@@ -1,0 +1,62 @@
+package com.example.TaskManager.model;
+
+public class Task {
+
+    private Long id;
+
+    private String title;
+    private String description;
+    private String importance;
+    private boolean completed;
+
+    public Task() {
+    }
+
+    public Task(String title, String description, String importance, boolean completed) {
+        this.title = title;
+        this.description = description;
+        this.importance = importance;
+        this.completed = completed;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImportance() {
+        return importance;
+    }
+
+    public void setImportance(String importance) {
+        this.importance = importance;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+}
