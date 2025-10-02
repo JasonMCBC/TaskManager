@@ -1,6 +1,7 @@
 package com.example.TaskManager.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,6 +46,31 @@ public class TaskController {
         return taskRepository.findById(id)
                 .map(TaskMapper::toDTO)
                 .orElse(null);
+    }
+    
+    // ✅ GET por Priority
+    @GetMapping("/Priority/{priority}")
+    public List<TaskDTO>  obtener(@PathVariable String priority) {
+        return taskRepository.findByPriority(priority)
+            .stream()
+            .map(TaskMapper::toDTO)
+            .collect(Collectors.toList());
+    }
+    // ✅ GET por Complete
+    @GetMapping("/Completed/{completed}")
+    public List<TaskDTO>  obtener(@PathVariable boolean completed) {
+        return taskRepository.findByCompleted(completed)
+            .stream()
+            .map(TaskMapper::toDTO)
+            .collect(Collectors.toList());
+    }
+    // ✅ GET por Complete + Priority
+    @GetMapping("/Priority/{priority}/Completed/{completed}")
+    public List<TaskDTO>  obtener(@PathVariable String priority, @PathVariable boolean completed) {
+        return taskRepository.findByPriorityAndCompleted(priority, completed)
+            .stream()
+            .map(TaskMapper::toDTO)
+            .collect(Collectors.toList());
     }
 
     // ✅ POST (crear)
