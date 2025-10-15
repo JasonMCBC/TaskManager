@@ -1,27 +1,66 @@
 package com.example.TaskManager.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.TaskManager.Services.UsuarioService;
-import com.example.TaskManager.dto.UsuarioDTO;
-import com.example.TaskManager.dto.UsuarioRequest;
+import com.example.TaskManager.dto.UserDTO;
+import com.example.TaskManager.dto.UserRequest;
+import com.example.TaskManager.mapper.UserMapper;
+import com.example.TaskManager.repository.UserRepository;
+
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/users")
 public class UserController {
-    private final UsuarioService usuarioService;
 
-    public UserController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+    @Autowired
+    private final UserRepository userRepository;
+
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+    
+
+    @GetMapping //GET Todas
+    public List<UserDTO> listar(){
+        return userRepository.findAll()
+            .stream()
+            .map(UserMapper::toDTO)
+            .toList();
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<UsuarioDTO> register(@RequestBody UsuarioRequest request) {
-        UsuarioDTO usuario = usuarioService.registrarUsuario(request);
-        return ResponseEntity.ok(usuario);
+    // ✅ GET por id
+    @GetMapping("/{id}")
+    public UserDTO obtener(@PathVariable Long id) {
+        return userRepository.findById(id)
+                .map(UserMapper::toDTO)
+                .orElse(null);
+    }
+
+    // ✅ PUT (actualizar)
+    @PutMapping("/{id}")
+    public UserDTO actualizar(@PathVariable Long id, @Valid @RequestBody UserRequest request) {
+        return userRepository.findById(id)
+                .map(t -> {
+                    t.setUsername(request.getUsername());
+                    t.setPassword(request.getPassword());
+                    return UserMapper.toDTO(userRepository.save(t));
+                })
+                .orElse(null);
+    }
+
+    // ✅ DELETE
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Long id) {
+        userRepository.deleteById(id);
     }
 }

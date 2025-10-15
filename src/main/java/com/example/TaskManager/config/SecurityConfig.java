@@ -24,10 +24,13 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll() // ← CORREGIDO: /auth en vez de /api/auth
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/tasks/**").hasRole("ADMIN") // Solo ADMIN puede gestionar tareas
+                .requestMatchers("/users/**").authenticated() // Cualquier usuario autenticado puede ver usuarios
                 .anyRequest().authenticated()
             )
-            .httpBasic(basic -> {});
+            .formLogin(form -> form.permitAll())
+            .logout(logout -> logout.permitAll());
 
         return http.build();
     }

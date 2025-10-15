@@ -1,17 +1,19 @@
 package com.example.TaskManager.dto;
 
+import java.util.Set;
+
 import com.example.TaskManager.model.Rol;
 
-public class UsuarioDTO{
+public class UserDTO{
 
     private final Long id;
     private final String username;
-    private final Rol rol;
+    private final Set<Rol> rol;
 
-    public UsuarioDTO(Long id, String username, Rol rol) {
+    public UserDTO(Long id, String username) {
         this.id = id;
         this.username = username;
-        this.rol = rol;
+        this.rol = null;
     }
 
     public Long getId() {
@@ -20,7 +22,7 @@ public class UsuarioDTO{
     public String getUsername() {
         return username;
     }
-    public Rol getRol() {
+    public Set<Rol> getRol() {
         return rol;
     }
     

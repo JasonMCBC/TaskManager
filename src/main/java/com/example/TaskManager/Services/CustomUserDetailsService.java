@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.TaskManager.model.Usuario;
-import com.example.TaskManager.repository.UsuarioRepository;
+import com.example.TaskManager.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UserRepository usuarioRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -25,7 +25,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         return User.builder()
             .username(usuario.getUsername())
             .password(usuario.getPassword()) // Ya está encriptada
-            .roles(usuario.getRol().name())
             .build();
     }
 }
