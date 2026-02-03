@@ -17,26 +17,25 @@ import com.example.TaskManager.dto.TaskDTO;
 import com.example.TaskManager.dto.TaskRequest;
 import com.example.TaskManager.mapper.TaskMapper;
 import com.example.TaskManager.model.Task;
+import com.example.TaskManager.model.Priority;
 import com.example.TaskManager.repository.TaskRepository;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/tasks")
+@RequiredArgsConstructor
 public class TaskController {
 
-    @Autowired
     private final TaskRepository taskRepository;
-
-    public TaskController(TaskRepository taskRepository){
-        this.taskRepository = taskRepository;
-    }
+    private final TaskMapper taskMapper;
 
     @GetMapping //GET Todas
     public List<TaskDTO> listar(){
         return taskRepository.findAll()
             .stream()
-            .map(TaskMapper::toDTO)
+            .map(taskMapper::toDTO)
             .toList();
     }
 
@@ -44,16 +43,16 @@ public class TaskController {
     @GetMapping("/{id}")
     public TaskDTO obtener(@PathVariable Long id) {
         return taskRepository.findById(id)
-                .map(TaskMapper::toDTO)
+                .map(taskMapper::toDTO)
                 .orElse(null);
     }
     
     // ✅ GET por Priority
     @GetMapping("/Priority/{priority}")
-    public List<TaskDTO>  obtener(@PathVariable String priority) {
+    public List<TaskDTO>  obtener(@PathVariable Priority priority) {
         return taskRepository.findByPriority(priority)
             .stream()
-            .map(TaskMapper::toDTO)
+            .map(taskMapper::toDTO)
             .collect(Collectors.toList());
     }
     // ✅ GET por Complete
@@ -61,23 +60,23 @@ public class TaskController {
     public List<TaskDTO>  obtener(@PathVariable boolean completed) {
         return taskRepository.findByCompleted(completed)
             .stream()
-            .map(TaskMapper::toDTO)
+            .map(taskMapper::toDTO)
             .collect(Collectors.toList());
     }
     // ✅ GET por Complete + Priority
     @GetMapping("/Priority/{priority}/Completed/{completed}")
-    public List<TaskDTO>  obtener(@PathVariable String priority, @PathVariable boolean completed) {
+    public List<TaskDTO>  obtener(@PathVariable Priority priority, @PathVariable boolean completed) {
         return taskRepository.findByPriorityAndCompleted(priority, completed)
             .stream()
-            .map(TaskMapper::toDTO)
+            .map(taskMapper::toDTO)
             .collect(Collectors.toList());
     }
 
     // ✅ POST (crear)
     @PostMapping
     public TaskDTO crear(@Valid @RequestBody TaskRequest request) {
-        Task tarea = TaskMapper.toEntity(request);
-        return TaskMapper.toDTO(taskRepository.save(tarea));
+        Task task = taskMapper.toEntity(request);
+        return taskMapper.toDTO(taskRepository.save(task));
     }
 
     // ✅ PUT (actualizar)
@@ -89,7 +88,7 @@ public class TaskController {
                     t.setDescription(request.getDescription());
                     t.setPriority(request.getPriority());
                     t.setCompleted(request.isCompleted());
-                    return TaskMapper.toDTO(taskRepository.save(t));
+                    return taskMapper.toDTO(taskRepository.save(t));
                 })
                 .orElse(null);
     }

@@ -1,6 +1,8 @@
 package com.example.TaskManager.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,13 +15,15 @@ public class Task {
 
     private String title;
     private String description;
-    private String priority;
     private boolean completed;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
 
     public Task() {
     }
 
-    public Task(String title, String description, String priority, boolean completed) {
+    public Task(String title, String description, Priority priority, boolean completed) {
         this.title = title;
         this.description = description;
         this.priority = priority;
@@ -50,11 +54,11 @@ public class Task {
         this.description = description;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 

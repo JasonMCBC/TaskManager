@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import com.example.TaskManager.model.Priority;
+
 public class TaskRequest {
     @NotBlank(message="El título no puede estar en blanco")
     @Size(min=3, max=100,message="Debe contener entre 3 y 100 caracteres")
@@ -14,7 +16,7 @@ public class TaskRequest {
 
     @NotBlank(message="La prioridad no puede estar vacía")
     @Size(min=3, max=100,message="Debe contener entre 3 y 100 caracteres")
-    private String priority;
+    private Priority priority;
 
     @NotNull(message="Se debe indicar si esta completa o no la tarea")
     private boolean completed;
@@ -35,11 +37,11 @@ public class TaskRequest {
         this.description = description;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
@@ -51,5 +53,4 @@ public class TaskRequest {
         this.completed = completed;
     }
 
-    
 }
