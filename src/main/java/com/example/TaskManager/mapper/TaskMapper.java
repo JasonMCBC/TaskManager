@@ -31,33 +31,13 @@ public class TaskMapper {
             request.isCompleted()
         );
     }
-}
 
-/* 
-    public static TaskDTO toDTO(Task tarea){
-        return new TaskDTO(
-            tarea.getId(),
-            tarea.getTitle(),
-            tarea.getDescription(),
-            tarea.getPriority(),
-            tarea.isCompleted()
-        );
-    }
+    public void updateEntity(Task task, TaskRequest request){
+        if (request == null) return;
 
-    public static Task toEntity(TaskRequest request){
-        return new Task(
-            request.getTitle(),
-            request.getDescription(),
-            request.getPriority(),
-            request.isCompleted()
-        );
-    }
-
-    public static void updateEntity(Task task, TaskRequest request){
-        
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
         task.setPriority(request.getPriority());
         task.setCompleted(request.isCompleted());
     }
-}*/
+}

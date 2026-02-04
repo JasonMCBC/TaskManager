@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.TaskManager.Services.TaskService;
 import com.example.TaskManager.dto.TaskDTO;
 import com.example.TaskManager.dto.TaskRequest;
 import com.example.TaskManager.mapper.TaskMapper;
-import com.example.TaskManager.model.Task;
 import com.example.TaskManager.model.Priority;
 import com.example.TaskManager.repository.TaskRepository;
 
@@ -30,73 +31,42 @@ public class TaskController {
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final TaskService taskService;
 
-    @GetMapping //GET Todas
-    public List<TaskDTO> listar(){
-        return taskRepository.findAll()
-            .stream()
-            .map(taskMapper::toDTO)
-            .toList();
+    // ✅ GET por Priority, Complete, ambos o ninguno
+    @GetMapping
+    public List<TaskDTO> getTasks(
+            @RequestParam(required = false) Priority priority,
+            @RequestParam(required = false) Boolean completed
+    ) {
+        return taskService.getTasks(priority, completed);
     }
 
     // ✅ GET por id
     @GetMapping("/{id}")
-    public TaskDTO obtener(@PathVariable Long id) {
-        return taskRepository.findById(id)
-                .map(taskMapper::toDTO)
-                .orElse(null);
-    }
-    
-    // ✅ GET por Priority
-    @GetMapping("/Priority/{priority}")
-    public List<TaskDTO>  obtener(@PathVariable Priority priority) {
-        return taskRepository.findByPriority(priority)
-            .stream()
-            .map(taskMapper::toDTO)
-            .collect(Collectors.toList());
-    }
-    // ✅ GET por Complete
-    @GetMapping("/Completed/{completed}")
-    public List<TaskDTO>  obtener(@PathVariable boolean completed) {
-        return taskRepository.findByCompleted(completed)
-            .stream()
-            .map(taskMapper::toDTO)
-            .collect(Collectors.toList());
-    }
-    // ✅ GET por Complete + Priority
-    @GetMapping("/Priority/{priority}/Completed/{completed}")
-    public List<TaskDTO>  obtener(@PathVariable Priority priority, @PathVariable boolean completed) {
-        return taskRepository.findByPriorityAndCompleted(priority, completed)
-            .stream()
-            .map(taskMapper::toDTO)
-            .collect(Collectors.toList());
+    public TaskDTO getById(@PathVariable Long id) {
+        return taskService.getTaskById(id);
     }
 
     // ✅ POST (crear)
     @PostMapping
-    public TaskDTO crear(@Valid @RequestBody TaskRequest request) {
-        Task task = taskMapper.toEntity(request);
-        return taskMapper.toDTO(taskRepository.save(task));
+    public TaskDTO create(@Valid @RequestBody TaskRequest request) {
+        return taskService.createTask(request);
     }
 
     // ✅ PUT (actualizar)
     @PutMapping("/{id}")
-    public TaskDTO actualizar(@PathVariable Long id, @Valid @RequestBody TaskRequest request) {
-        return taskRepository.findById(id)
-                .map(t -> {
-                    t.setTitle(request.getTitle());
-                    t.setDescription(request.getDescription());
-                    t.setPriority(request.getPriority());
-                    t.setCompleted(request.isCompleted());
-                    return taskMapper.toDTO(taskRepository.save(t));
-                })
-                .orElse(null);
+    public TaskDTO update(
+            @PathVariable Long id,
+            @Valid @RequestBody TaskRequest request
+    ) {
+        return taskService.updateTask(id, request);
     }
 
     // ✅ DELETE
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        taskRepository.deleteById(id);
+    public void delete(@PathVariable Long id) {
+        taskService.deleteTask(id);
     }
 
 }
