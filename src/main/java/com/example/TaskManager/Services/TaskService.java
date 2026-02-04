@@ -22,4 +22,6 @@ public interface TaskService {
 
     List<TaskDTO> getTasksByCompleted(Boolean completed);
 
+    List<TaskDTO> getTasks(Priority priority, Boolean completed);
+
 }

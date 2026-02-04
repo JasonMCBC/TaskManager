@@ -15,5 +15,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByCompleted(boolean completed);
 
     // Buscar por prioridad y estado a la vez
-    List<Task> findByPriorityAndCompleted(Priority priority, boolean completed);
+    List<Task> findByPriorityAndCompleted(Priority priority, Boolean completed);
+
 }

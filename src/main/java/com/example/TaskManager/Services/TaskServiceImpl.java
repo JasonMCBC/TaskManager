@@ -2,6 +2,7 @@ package com.example.TaskManager.Services;
 
 import com.example.TaskManager.dto.TaskDTO;
 import com.example.TaskManager.dto.TaskRequest;
+import com.example.TaskManager.exception.ResourceNotFoundException;
 import com.example.TaskManager.mapper.TaskMapper;
 import com.example.TaskManager.model.Priority;
 import com.example.TaskManager.model.Task;
@@ -32,7 +33,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskDTO getTaskById(Long id){
         return taskRepository.findById(id)
             .map(taskMapper::toDTO)
-            .orElseThrow(()-> new RuntimeException("Task not found"));
+            .orElseThrow(()-> new ResourceNotFoundException("Task not found"));
     }
     @Override
     public TaskDTO createTask(TaskRequest request){
@@ -44,12 +45,9 @@ public class TaskServiceImpl implements TaskService {
     public TaskDTO updateTask(Long id, TaskRequest request) {
 
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task no encontrada"));
 
-        task.setTitle(request.getTitle());
-        task.setDescription(request.getDescription());
-        task.setPriority(request.getPriority());
-        task.setCompleted(request.isCompleted());
+        taskMapper.updateEntity(task, request);
 
         return taskMapper.toDTO(taskRepository.save(task));
     }
@@ -57,7 +55,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTask(Long id) {
         if (!taskRepository.existsById(id)) {
-            throw new RuntimeException("Task no encontrada");
+            throw new ResourceNotFoundException("Task no encontrada");
         }
         taskRepository.deleteById(id);
     }
@@ -77,4 +75,25 @@ public class TaskServiceImpl implements TaskService {
                 .map(taskMapper::toDTO)
                 .toList();
     }
+
+    @Override
+    public List<TaskDTO> getTasks(Priority priority, Boolean completed) {
+
+        List<Task> tasks;
+
+        if (priority != null && completed != null) {
+            tasks = taskRepository.findByPriorityAndCompleted(priority, completed);
+        } else if (priority != null) {
+            tasks = taskRepository.findByPriority(priority);
+        } else if (completed != null) {
+            tasks = taskRepository.findByCompleted(completed);
+        } else {
+            tasks = taskRepository.findAll();
+        }
+
+        return tasks.stream()
+                .map(taskMapper::toDTO)
+                .toList();
+    }
+
 }
