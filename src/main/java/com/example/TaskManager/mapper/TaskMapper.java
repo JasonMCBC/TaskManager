@@ -24,12 +24,13 @@ public class TaskMapper {
     public Task toEntity(TaskRequest request) {
         if (request == null) return null;
 
-        return new Task(
-            request.getTitle(),
-            request.getDescription(),
-            request.getPriority(),
-            request.isCompleted()
-        );
+        Task task = new Task();
+        task.setTitle(request.getTitle());
+        task.setDescription(request.getDescription());
+        task.setPriority(request.getPriority());
+        task.setCompleted(request.isCompleted());
+
+        return task;
     }
 
     public void updateEntity(Task task, TaskRequest request){

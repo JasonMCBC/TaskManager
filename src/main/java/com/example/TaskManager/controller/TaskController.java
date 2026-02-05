@@ -1,9 +1,9 @@
 package com.example.TaskManager.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.TaskManager.Services.TaskService;
 import com.example.TaskManager.dto.TaskDTO;
 import com.example.TaskManager.dto.TaskRequest;
-import com.example.TaskManager.mapper.TaskMapper;
 import com.example.TaskManager.model.Priority;
-import com.example.TaskManager.repository.TaskRepository;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,44 +27,58 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TaskController {
 
-    private final TaskRepository taskRepository;
-    private final TaskMapper taskMapper;
     private final TaskService taskService;
 
-    // ✅ GET por Priority, Complete, ambos o ninguno
+    /**
+     * Obtener todas las tareas del usuario autenticado
+     * Opcionalmente filtrar por prioridad y/o estado de completado
+     */
+
     @GetMapping
-    public List<TaskDTO> getTasks(
+    public ResponseEntity<List<TaskDTO>> getTasks(
             @RequestParam(required = false) Priority priority,
             @RequestParam(required = false) Boolean completed
     ) {
-        return taskService.getTasks(priority, completed);
+        List<TaskDTO> tasks = taskService.getTasks(priority, completed);
+        return ResponseEntity.ok(tasks);
     }
 
-    // ✅ GET por id
+    /**
+     * Obtener una tarea específica por ID
+     */
     @GetMapping("/{id}")
-    public TaskDTO getById(@PathVariable Long id) {
-        return taskService.getTaskById(id);
+    public ResponseEntity<TaskDTO> getById(@PathVariable Long id) {
+        TaskDTO task = taskService.getTaskById(id);
+        return ResponseEntity.ok(task);
     }
 
-    // ✅ POST (crear)
+    /**
+     * Crear una nueva tarea
+     */
     @PostMapping
-    public TaskDTO create(@Valid @RequestBody TaskRequest request) {
-        return taskService.createTask(request);
+    public ResponseEntity<TaskDTO> create(@Valid @RequestBody TaskRequest request) {
+        TaskDTO createdTask = taskService.createTask(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
 
-    // ✅ PUT (actualizar)
+    /**
+     * Actualizar una tarea existente
+     */
     @PutMapping("/{id}")
-    public TaskDTO update(
+    public ResponseEntity<TaskDTO> update(
             @PathVariable Long id,
             @Valid @RequestBody TaskRequest request
     ) {
-        return taskService.updateTask(id, request);
+        TaskDTO updatedTask = taskService.updateTask(id, request);
+        return ResponseEntity.ok(updatedTask);
     }
 
-    // ✅ DELETE
+    /**
+     * Eliminar una tarea
+     */
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
     }
-
 }
