@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.TaskManager.dto.UserDTO;
 import com.example.TaskManager.dto.UserRequest;
 import com.example.TaskManager.mapper.UserMapper;
-import com.example.TaskManager.repository.UserRepository;
+import com.example.TaskManager.repository.UsuarioRepository;
 
 import jakarta.validation.Valid;
 
@@ -23,9 +23,9 @@ import jakarta.validation.Valid;
 public class UserController {
 
     @Autowired
-    private final UserRepository userRepository;
+    private final UsuarioRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UsuarioRepository userRepository) {
         this.userRepository = userRepository;
     }
     

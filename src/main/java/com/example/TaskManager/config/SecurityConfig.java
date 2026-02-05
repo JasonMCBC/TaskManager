@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.Customizer;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,16 +23,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/tasks/**").hasRole("ADMIN") // Solo ADMIN puede gestionar tareas
-                .requestMatchers("/users/**").authenticated() // Cualquier usuario autenticado puede ver usuarios
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() 
+                .requestMatchers("/tasks/**").authenticated()
                 .anyRequest().authenticated()
             )
-            .formLogin(form -> form.permitAll())
-            .logout(logout -> logout.permitAll());
+            .httpBasic(Customizer.withDefaults())
+            .formLogin(form -> form.disable());
 
         return http.build();
     }
