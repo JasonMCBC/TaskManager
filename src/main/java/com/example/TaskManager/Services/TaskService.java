@@ -1,10 +1,10 @@
-package com.example.TaskManager.Services;
+package com.example.taskmanager.Services;
 
 import java.util.List;
 
-import com.example.TaskManager.dto.TaskDTO;
-import com.example.TaskManager.dto.TaskRequest;
-import com.example.TaskManager.model.Priority;
+import com.example.taskmanager.dto.TaskDTO;
+import com.example.taskmanager.dto.TaskRequest;
+import com.example.taskmanager.model.Priority;
 
 public interface TaskService {
 

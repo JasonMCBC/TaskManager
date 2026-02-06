@@ -1,4 +1,4 @@
-package com.example.TaskManager.dto;
+package com.example.taskmanager.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserRequest {

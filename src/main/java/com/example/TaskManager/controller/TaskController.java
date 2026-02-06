@@ -1,4 +1,4 @@
-package com.example.TaskManager.controller;
+package com.example.taskmanager.controller;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.TaskManager.Services.TaskService;
-import com.example.TaskManager.dto.TaskDTO;
-import com.example.TaskManager.dto.TaskRequest;
-import com.example.TaskManager.model.Priority;
+import com.example.taskmanager.Services.TaskService;
+import com.example.taskmanager.dto.TaskDTO;
+import com.example.taskmanager.dto.TaskRequest;
+import com.example.taskmanager.model.Priority;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

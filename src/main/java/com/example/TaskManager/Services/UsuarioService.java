@@ -1,4 +1,4 @@
-package com.example.TaskManager.Services;
+package com.example.taskmanager.Services;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,12 +7,12 @@ import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.TaskManager.dto.UserDTO;
-import com.example.TaskManager.dto.UserRequest;
-import com.example.TaskManager.model.Rol;
-import com.example.TaskManager.model.Usuario;
-import com.example.TaskManager.repository.RolRepository;
-import com.example.TaskManager.repository.UsuarioRepository;
+import com.example.taskmanager.dto.UserDTO;
+import com.example.taskmanager.dto.UserRequest;
+import com.example.taskmanager.model.Rol;
+import com.example.taskmanager.model.Usuario;
+import com.example.taskmanager.repository.RolRepository;
+import com.example.taskmanager.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
 
