@@ -1,4 +1,4 @@
-package com.example.TaskManager.model;
+package com.example.taskmanager.model;
 
 import java.util.ArrayList;
 import java.util.Set;

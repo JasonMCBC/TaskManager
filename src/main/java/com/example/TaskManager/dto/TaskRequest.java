@@ -1,10 +1,10 @@
-package com.example.TaskManager.dto;
+package com.example.taskmanager.dto;
+
+import com.example.taskmanager.model.Priority;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import com.example.TaskManager.model.Priority;
 
 public class TaskRequest {
     

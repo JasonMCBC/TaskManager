@@ -1,4 +1,4 @@
-package com.example.TaskManager.controller;
+package com.example.taskmanager.controller;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.TaskManager.Services.UsuarioService;
-import com.example.TaskManager.dto.LoginRequest;
-import com.example.TaskManager.dto.UserDTO;
-import com.example.TaskManager.dto.UserRequest;
+import com.example.taskmanager.Services.UsuarioService;
+import com.example.taskmanager.dto.LoginRequest;
+import com.example.taskmanager.dto.UserDTO;
+import com.example.taskmanager.dto.UserRequest;
 
 import lombok.RequiredArgsConstructor;
 

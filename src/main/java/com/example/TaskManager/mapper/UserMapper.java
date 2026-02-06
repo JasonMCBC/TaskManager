@@ -1,8 +1,8 @@
-package com.example.TaskManager.mapper;
+package com.example.taskmanager.mapper;
 
-import com.example.TaskManager.dto.UserDTO;
-import com.example.TaskManager.dto.UserRequest;
-import com.example.TaskManager.model.Usuario;
+import com.example.taskmanager.dto.UserDTO;
+import com.example.taskmanager.dto.UserRequest;
+import com.example.taskmanager.model.Usuario;
 
 public class UserMapper {
 
