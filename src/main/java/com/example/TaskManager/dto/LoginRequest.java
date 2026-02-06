@@ -1,4 +1,4 @@
-package com.example.TaskManager.dto;
+package com.example.taskmanager.dto;
 
 public class LoginRequest {
     private String username;

@@ -1,7 +1,6 @@
-package com.example.TaskManager.dto;
+package com.example.taskmanager.dto;
 
-//import lombok.Value; con este import vuelve la clase inmutable con getter y constructor sin ecribir
-import com.example.TaskManager.model.Priority;
+import com.example.taskmanager.model.Priority;
 
 public class TaskDTO {
     private final Long id;

@@ -1,8 +1,8 @@
-package com.example.TaskManager.dto;
+package com.example.taskmanager.dto;
 
 import java.util.Set;
 
-import com.example.TaskManager.model.Rol;
+import com.example.taskmanager.model.Rol;
 
 public class UserDTO{
 

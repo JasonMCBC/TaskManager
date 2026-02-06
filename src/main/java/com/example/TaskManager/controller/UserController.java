@@ -1,4 +1,4 @@
-package com.example.TaskManager.controller;
+package com.example.taskmanager.controller;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.TaskManager.dto.UserDTO;
-import com.example.TaskManager.dto.UserRequest;
-import com.example.TaskManager.mapper.UserMapper;
-import com.example.TaskManager.repository.UsuarioRepository;
+import com.example.taskmanager.dto.UserDTO;
+import com.example.taskmanager.dto.UserRequest;
+import com.example.taskmanager.mapper.UserMapper;
+import com.example.taskmanager.repository.UsuarioRepository;
 
 import jakarta.validation.Valid;
 

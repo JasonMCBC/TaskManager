@@ -1,4 +1,4 @@
-package com.example.TaskManager.Services;
+package com.example.taskmanager.Services;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.TaskManager.model.Usuario;
-import com.example.TaskManager.repository.UsuarioRepository;
+import com.example.taskmanager.model.Usuario;
+import com.example.taskmanager.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
 

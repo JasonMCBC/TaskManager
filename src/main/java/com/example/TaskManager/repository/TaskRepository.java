@@ -1,12 +1,12 @@
-package com.example.TaskManager.repository;
+package com.example.taskmanager.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.TaskManager.model.Task;
-import com.example.TaskManager.model.Usuario;
-import com.example.TaskManager.model.Priority;
+import com.example.taskmanager.model.Priority;
+import com.example.taskmanager.model.Task;
+import com.example.taskmanager.model.Usuario;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
     // Buscar por prioridad

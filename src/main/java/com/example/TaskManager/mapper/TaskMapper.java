@@ -1,10 +1,10 @@
-package com.example.TaskManager.mapper;
-
-import com.example.TaskManager.dto.TaskDTO;
-import com.example.TaskManager.dto.TaskRequest;
-import com.example.TaskManager.model.Task;
+package com.example.taskmanager.mapper;
 
 import org.springframework.stereotype.Component;
+
+import com.example.taskmanager.dto.TaskDTO;
+import com.example.taskmanager.dto.TaskRequest;
+import com.example.taskmanager.model.Task;
 
 @Component
 public class TaskMapper {
