@@ -3,6 +3,8 @@ package com.example.taskmanager.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.example.taskmanager.model.Priority;
 import com.example.taskmanager.model.Task;
@@ -28,6 +30,31 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             Usuario usuario,
             Priority priority,
             Boolean completed
+    );
+
+    // ========================================
+    // Métodos CON PAGINACIÓN (nuevos)
+    // ========================================
+    
+    Page<Task> findByUsuario(Usuario usuario, Pageable pageable);
+
+    // Buscar por prioridad
+    Page<Task> findByPriority(Priority priority, Pageable pageable);
+
+    // Buscar por estado (true = completada, false = pendiente)
+    Page<Task> findByCompleted(boolean completed, Pageable pageable);
+    
+    Page<Task> findByUsuarioAndPriority(Usuario usuario, Priority priority, Pageable pageable);
+    
+    Page<Task> findByUsuarioAndCompleted(Usuario usuario, Boolean completed, Pageable pageable);
+
+    Page<Task> findByPriorityAndCompleted(Priority priority, Boolean completed, Pageable pageable);
+    
+    Page<Task> findByUsuarioAndPriorityAndCompleted(
+        Usuario usuario, 
+        Priority priority, 
+        Boolean completed, 
+        Pageable pageable
     );
 
 }
