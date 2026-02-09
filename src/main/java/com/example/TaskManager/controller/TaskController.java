@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.example.taskmanager.Services.TaskService;
 import com.example.taskmanager.dto.TaskDTO;
@@ -20,6 +24,7 @@ import com.example.taskmanager.dto.TaskRequest;
 import com.example.taskmanager.model.Priority;
 
 import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -28,6 +33,29 @@ import lombok.RequiredArgsConstructor;
 public class TaskController {
 
     private final TaskService taskService;
+
+    // ========================================
+    // ENDPOINT NUEVO: GET con paginación
+    // /tasks/paginated?page=0&size=20
+    // ========================================
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<TaskDTO>> getTasksPaginated(
+            @RequestParam(required = false) Priority priority,
+            @RequestParam(required = false) Boolean completed,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "DESC") String direction
+    ) {
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("ASC") 
+            ? Sort.Direction.ASC 
+            : Sort.Direction.DESC;
+        
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortBy));
+        
+        Page<TaskDTO> tasks = taskService.getTasksPaginated(priority, completed, pageable);
+        return ResponseEntity.ok(tasks);
+    }
 
     /**
      * Obtener todas las tareas del usuario autenticado

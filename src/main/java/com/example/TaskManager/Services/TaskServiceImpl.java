@@ -3,9 +3,6 @@ package com.example.taskmanager.Services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.example.taskmanager.dto.TaskDTO;
 import com.example.taskmanager.dto.TaskRequest;
 import com.example.taskmanager.exception.ResourceNotFoundException;
@@ -18,6 +15,10 @@ import com.example.taskmanager.repository.UsuarioRepository;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -110,6 +111,34 @@ public class TaskServiceImpl implements TaskService {
                 .toList();
     }
 
+    // ========================================
+    // NUEVO MÉTODO (con paginación)
+    // ========================================
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TaskDTO> getTasksPaginated(Priority priority, Boolean completed, Pageable pageable) {
+        Usuario usuario = getUsuarioAutenticado();
+        log.debug("Obteniendo tareas paginadas para usuario: {} (priority={}, completed={}, page={}, size={})", 
+                  usuario.getUsername(), priority, completed, pageable.getPageNumber(), pageable.getPageSize());
+
+        Page<Task> tasks;
+
+        if (priority != null && completed != null) {
+            tasks = taskRepository.findByUsuarioAndPriorityAndCompleted(usuario, priority, completed, pageable);
+        } else if (priority != null) {
+            tasks = taskRepository.findByUsuarioAndPriority(usuario, priority, pageable);
+        } else if (completed != null) {
+            tasks = taskRepository.findByUsuarioAndCompleted(usuario, completed, pageable);
+        } else {
+            tasks = taskRepository.findByUsuario(usuario, pageable);
+        }
+
+        log.debug("Se encontraron {} tareas (página {}/{})", 
+                  tasks.getNumberOfElements(), tasks.getNumber() + 1, tasks.getTotalPages());
+        
+        return tasks.map(taskMapper::toDTO);
+    }
+    
     /**
      * Obtiene el usuario autenticado desde el contexto de seguridad
      */
