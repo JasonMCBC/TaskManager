@@ -14,6 +14,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -24,13 +26,13 @@ public class AuthController {
     private final JwtUtil jwtUtil;  // ← NUEVO
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> register(@RequestBody UserRequest request) {
+    public ResponseEntity<UserDTO> register(@Valid @RequestBody UserRequest request) {
         UserDTO usuario = userService.registrarUsuario(request);
         return ResponseEntity.ok(usuario);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         // 1. Autenticar usuario (verifica username y password)
         // Si falla, lanza BadCredentialsException automáticamente
         authenticationManager.authenticate(
