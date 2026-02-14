@@ -8,6 +8,9 @@ COPY gradlew .
 COPY build.gradle .
 COPY settings.gradle .
 
+# ← AGREGADO: Dar permisos de ejecución
+RUN chmod +x gradlew
+
 # Descargar dependencias (cacheable)
 RUN ./gradlew dependencies --no-daemon || true
 
