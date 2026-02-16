@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")  // Todos los endpoints
                 // Orígenes permitidos (donde está tu frontend)
                 .allowedOrigins(
+                    "https://taskmanager-frontend-lac.vercel.app/",  // Vercel (producción)
                     "http://localhost:3000",     // React
                     "http://localhost:4200",     // Angular
                     "http://localhost:5173",     // Vite
