@@ -31,7 +31,8 @@ public class SecurityConfig {
                 corsConfig.setAllowedOrigins(java.util.Arrays.asList(
                     "http://localhost:3000",
                     "http://localhost:4200",
-                    "http://localhost:5173"
+                    "http://localhost:5173",
+                    "https://taskmanager-frontend-lac.vercel.app"
                 ));
                 corsConfig.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
                 corsConfig.setAllowedHeaders(java.util.Arrays.asList("*"));
