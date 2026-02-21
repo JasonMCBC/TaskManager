@@ -14,13 +14,13 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")  // Todos los endpoints
                 // Orígenes permitidos (donde está tu frontend)
                 .allowedOrigins(
-                    "https://taskmanager-frontend-augss2b83-jasonmcbcs-projects.vercel.app/",  // Vercel (producción)
+                    "https://taskmanager-frontend-b85qzinj8-jasonmcbcs-projects.vercel.app/",  // Vercel (producción)
                     "http://localhost:3000",     // React
                     "http://localhost:4200",     // Angular
                     "http://localhost:5173",     // Vite
                     "http://localhost:8081",     // Vue
                     "http://127.0.0.1:5500",     // Live Server (VS Code)
-                    "https://tu-frontend.vercel.app"  // Producción (cambia esto)
+                    "https://taskmanager-frontend-lac.vercel.app/"  // Producción (cambia esto)
                 )
                 // Métodos HTTP permitidos
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
